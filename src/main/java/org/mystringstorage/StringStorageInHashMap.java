@@ -2,7 +2,7 @@ package org.mystringstorage;
 
 import java.util.HashMap;
 
-public class StringStorage {
+public class StringStorageInHashMap {
 
     private static int stringIdCount = 1;
     private final HashMap<Integer, String> stringStorageMap = new HashMap<>();

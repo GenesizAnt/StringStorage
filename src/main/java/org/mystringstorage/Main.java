@@ -1,72 +1,57 @@
 package org.mystringstorage;
 
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Main {
+    public static final String CREATE_COMMAND = "CREATE";
+    public static final String GET_COMMAND = "GET";
+    public static final String UPDATE_COMMAND = "UPDATE";
+    public static final String DELETE_COMMAND = "DELETE";
+    public static final String QUIT_COMMAND = "QUIT";
+
+    public static FileController fileController = new FileController();
+    public static StringStorageInHashMap stringStorage = new StringStorageInHashMap();
+    public static CRUDLogicInDataBase logicInDataBase = new CRUDLogicInHashMap(stringStorage);
+    public static PerformerCRUD performerCRUD = new PerformerCRUD(logicInDataBase);
 
     public static void main(String[] args) {
 
-//        String str = "aиавпивапиbc 3";
-//        if (str.matches(".*[0-9].*")) {
-//            System.out.println("В строке содержатся цифры");
-//        } else {
-//            System.out.println("Цифр в строке нет");
-//        }
+        System.out.println("Welcome to CRUD String Storage. Please press Enter:");
+        System.out.println("_________________________________________________");
 
-        StringStorage stringStorage = new StringStorage();
-        LogicCRUD logicCRUD = new LogicCRUD(stringStorage);
+        Scanner scanner = new Scanner(System.in);
+        String command = "";
 
-        String s = "CREATE { }";
-        String s1 = "CREATE {}";
-        String s2 = "CREATE {dfvsdfv}";
-        String s3 = "CREATE {GET -198}";
-        String s4 = "CREATE { fdgv 34 dgfg}";
+        fileController.readFile(stringStorage);
 
+        while (!command.equals(QUIT_COMMAND)) {
 
-//        logicCRUD.createStr(s);
-//        logicCRUD.createStr(s1);
-//        logicCRUD.createStr(s2);
-//        logicCRUD.createStr(s3);
-//        logicCRUD.createStr(s4);
+            System.out.println("CREATE {some_sting}  : For to save string");
+            System.out.println("GET or GET 'number str'  : For to read string or specific string");
+            System.out.println("UPDATE 'number str' : For to edit a specific string");
+            System.out.println("DELETE 'number str'  : For to delete a string");
+            System.out.println("QUIT  : To close the programme");
 
+            command = scanner.nextLine();
 
-
-
-
-
-
-
-
-
-
-
-
-//        Scanner scanner = new Scanner(System.in);
-//        String command = "";
-//
-//        while (!command.equals("QUIT")) {
-//
-//            System.out.println("Welcome to CRUD String Storage. Please press Enter:");
-//            System.out.println("_________________________________________________");
-//            System.out.println("CREATE {some_sting}  : For to save string");
-//            System.out.println("GET or GET 'number str'  : For to read string or specific string");
-//            System.out.println("UPDATE 'number str' : For to edit a specific string");
-//            System.out.println("DELETE 'number str'  : For to delete a string");
-//            System.out.println("QUIT  : To close the programme");
-//
-//            command = scanner.nextLine();
-//
-//            switch (command) {
-//                case "CREATE" -> System.out.println(1);
-//                case "GET" -> System.out.println(2);
-//                case "UPDATE" -> System.out.println(3);
-//                case "DELETE" -> {
-//                    break;
-//                }
-//                default -> System.out.println("Command not recognized! Please try again");
-//            }
-//        }
+            if (command.contains(CREATE_COMMAND)) {
+                performerCRUD.createStringInStringStorage(command);
+            } else if (command.contains(GET_COMMAND) || (command.contains(GET_COMMAND) && command.matches("\\d+"))) {
+                performerCRUD.getStringInStringStorage(command);
+            } else if (command.contains(UPDATE_COMMAND) || (command.contains(UPDATE_COMMAND) && command.matches("\\d+"))) {
+                performerCRUD.updateStringInStringStorage(command);
+            } else if (command.contains(DELETE_COMMAND) || (command.contains(DELETE_COMMAND) && command.matches("\\d+"))) {
+                performerCRUD.deleteStringInStringStorage(command);
+            } else if (command.contains(QUIT_COMMAND)) {
+                System.out.println("Exit programme. Bye!");
+                fileController.saveFile(stringStorage);
+                break;
+            } else {
+                System.err.println("Command not recognized! Please try again");
+            }
+        }
     }
 }
