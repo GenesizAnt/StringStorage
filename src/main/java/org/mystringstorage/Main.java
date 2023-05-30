@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+//ToDo добавить файл гитИгнор чтобы не попадали папки Идеа и Таргет
 public class Main {
-    public static final String CREATE_COMMAND = "CREATE";
+    public static final String CREATE_COMMAND = "CREATE"; //ToDo вынести все поля в отдельный класс, чтобы в Майн было только старт класса + поля не будут Статик
     public static final String GET_COMMAND = "GET";
     public static final String UPDATE_COMMAND = "UPDATE";
     public static final String DELETE_COMMAND = "DELETE";
@@ -19,13 +20,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Welcome to CRUD String Storage. Please press Enter:");
+        System.out.println("Welcome to CRUD String Storage. Please choose command and press Enter:");
         System.out.println("_________________________________________________");
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);//ToDo сделать закрытие сканера когда он уже не нужен - https://stackoverflow.com/questions/47588704/java-using-scanner-with-try-with-resources
         String command = "";
 
-        fileController.readFile(stringStorage);
+        fileController.readFile(stringStorage); //ToDo метод не должен менять состояние передаваемого объекта, лучше возвращает массив, который мы сохраним в переменную сами
 
         while (!command.equals(QUIT_COMMAND)) {
 
@@ -39,7 +40,7 @@ public class Main {
 
             if (command.contains(CREATE_COMMAND)) {
                 performerCRUD.createStringInStringStorage(command);
-            } else if (command.contains(GET_COMMAND) || (command.contains(GET_COMMAND) && command.matches("\\d+"))) {
+            } else if (command.contains(GET_COMMAND) || (command.contains(GET_COMMAND) && command.matches("\\d+"))) {//ToDo не использовать регулярки??? а как тогда по другому
                 performerCRUD.getStringInStringStorage(command);
             } else if (command.contains(UPDATE_COMMAND) || (command.contains(UPDATE_COMMAND) && command.matches("\\d+"))) {
                 performerCRUD.updateStringInStringStorage(command);

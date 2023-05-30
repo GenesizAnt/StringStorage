@@ -6,14 +6,14 @@ import java.util.regex.Pattern;
 
 public class CRUDLogicInHashMap extends CRUDLogicInDataBase {
 
-    StringStorageInHashMap stringStorage;
+    private StringStorageInHashMap stringStorage;
 
     public CRUDLogicInHashMap(StringStorageInHashMap stringStorage) {
         this.stringStorage = stringStorage;
     }
 
     @Override
-    public void createString(String command) {
+    public void createString(String command) { //ToDo сделать парсинг в отдельном файле, чтобы не делать больших проверок в самом методе + возможно класс парсер создавать вместе с базой т.е. отдать в базу
         int indexStart = command.indexOf("{") + 1;
         int indexEnd = command.indexOf("}");
 
@@ -31,13 +31,13 @@ public class CRUDLogicInHashMap extends CRUDLogicInDataBase {
 
         if (command.equals(Main.GET_COMMAND)) {
             if (stringMap.isEmpty()) {
-                System.err.println("База строк еще пустая!");
+                System.out.println("База строк еще пустая!");
             } else {
                 for (Map.Entry<Integer, String> entry : stringMap.entrySet()) {
                     System.out.println("String with id: " + entry.getKey() + " = " + " {" + entry.getValue() + "}");
                 }
             }
-        }
+        } //ToDo Да просто попробуй все что после гет привести к целому числу
 
         if (index < 0) {
 

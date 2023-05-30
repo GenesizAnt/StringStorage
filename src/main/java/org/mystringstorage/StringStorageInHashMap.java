@@ -2,7 +2,7 @@ package org.mystringstorage;
 
 import java.util.HashMap;
 
-public class StringStorageInHashMap {
+public class StringStorageInHashMap { //ToDo в данном классе сделать методы КРУД, т.е. работы с этой базой
 
     private static int stringIdCount = 1;
     private final HashMap<Integer, String> stringStorageMap = new HashMap<>();

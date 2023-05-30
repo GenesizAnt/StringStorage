@@ -1,6 +1,6 @@
 package org.mystringstorage;
 
-public class CRUDLogicInDataBase {
+public class CRUDLogicInDataBase { //ToDo возможно сделать интерфейсом??
     public void createString(String command) {
     }
 

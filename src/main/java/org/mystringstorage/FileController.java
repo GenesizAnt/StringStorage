@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class FileController {
     public void saveFile(StringStorageInHashMap stringStorage) {
-        Map<Integer, String> stringMap = stringStorage.getStringStorageMap();
         try (FileWriter writer = new FileWriter("saveStringStorage.txt")) {
             for (Map.Entry<Integer, String> entry : stringStorage.getStringStorageMap().entrySet()) {
                 writer.write(entry.getKey() + ";" + entry.getValue() + ";\n");

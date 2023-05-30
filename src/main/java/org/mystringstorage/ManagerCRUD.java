@@ -2,7 +2,7 @@ package org.mystringstorage;
 
 public interface ManagerCRUD {
 
-    public void createStringInStringStorage(String command);
+    public void createStringInStringStorage(String command);//ToDo возможно лишний класс и избыточное название
 
     public void updateStringInStringStorage(String command);
 
