@@ -6,22 +6,22 @@ import java.util.regex.Pattern;
 
 public class CRUDLogicInHashMap extends CRUDLogicInDataBase {
 
-    StringStorageInHashMap stringStorage;
+    private StringStorageInHashMap stringStorage;
 
     public CRUDLogicInHashMap(StringStorageInHashMap stringStorage) {
         this.stringStorage = stringStorage;
     }
 
     @Override
-    public void createString(String command) {
+    public void createString(String command) { //ToDo сделать парсинг в отдельном файле, чтобы не делать больших проверок в самом методе + возможно класс парсер создавать вместе с базой т.е. отдать в базу
         int indexStart = command.indexOf("{") + 1;
         int indexEnd = command.indexOf("}");
 
         String result = command.substring(indexStart, indexEnd);
-        stringStorage.getStringStorageMap().put(StringStorageInHashMap.getStringIdCount(), result);
-        System.out.println("String saved with id = {" + StringStorageInHashMap.getStringIdCount() + "}");
+//        stringStorage.getStringStorageMap().put(StringStorageInHashMap.getStringIdCount(), result);
+//        System.out.println("String saved with id = {" + StringStorageInHashMap.getStringIdCount() + "}");
 
-        StringStorageInHashMap.decrementStringIdCount();
+//        StringStorageInHashMap.decrementStringIdCount();
     }
 
     @Override
@@ -31,15 +31,15 @@ public class CRUDLogicInHashMap extends CRUDLogicInDataBase {
 
         if (command.equals(Main.GET_COMMAND)) {
             if (stringMap.isEmpty()) {
-                System.err.println("База строк еще пустая!");
+                System.out.println("База строк еще пустая!");
             } else {
                 for (Map.Entry<Integer, String> entry : stringMap.entrySet()) {
                     System.out.println("String with id: " + entry.getKey() + " = " + " {" + entry.getValue() + "}");
                 }
             }
-        }
+        } //ToDo Да просто попробуй все что после гет привести к целому числу
 
-        if (index < 0) {
+        if (index < 0) { //ToDo Можно взять подстроку с 5 символа до конца и попытаться преобразовать в число + А так, по ТЗ говорят число будет, значит нужно ждать число или ругаться)
 
         } else if (index > stringMap.size()) {
             System.err.println("Строка с таким индексом еще не создана!");
