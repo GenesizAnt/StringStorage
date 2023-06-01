@@ -1,6 +1,6 @@
 package org.mystringstorage;
 
-public class PerformerCRUD implements ManagerCRUD {
+public class PerformerCRUD {
 
     private CRUDLogicInDataBase dataBase;
 
@@ -8,22 +8,22 @@ public class PerformerCRUD implements ManagerCRUD {
         this.dataBase = dataBase;
     }
 
-    @Override
+
     public void createStringInStringStorage(String command) {
         dataBase.createString(command);
     }
 
-    @Override
+
     public void updateStringInStringStorage(String command) {
         dataBase.updateString(command);
     }
 
-    @Override
+
     public void deleteStringInStringStorage(String command) {
         dataBase.deleteString(command);
     }
 
-    @Override
+
     public void getStringInStringStorage(String command) {
         dataBase.getString(command);
     }

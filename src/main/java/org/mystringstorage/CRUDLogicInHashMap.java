@@ -18,10 +18,10 @@ public class CRUDLogicInHashMap extends CRUDLogicInDataBase {
         int indexEnd = command.indexOf("}");
 
         String result = command.substring(indexStart, indexEnd);
-        stringStorage.getStringStorageMap().put(StringStorageInHashMap.getStringIdCount(), result);
-        System.out.println("String saved with id = {" + StringStorageInHashMap.getStringIdCount() + "}");
+//        stringStorage.getStringStorageMap().put(StringStorageInHashMap.getStringIdCount(), result);
+//        System.out.println("String saved with id = {" + StringStorageInHashMap.getStringIdCount() + "}");
 
-        StringStorageInHashMap.decrementStringIdCount();
+//        StringStorageInHashMap.decrementStringIdCount();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class CRUDLogicInHashMap extends CRUDLogicInDataBase {
             }
         } //ToDo Да просто попробуй все что после гет привести к целому числу
 
-        if (index < 0) {
+        if (index < 0) { //ToDo Можно взять подстроку с 5 символа до конца и попытаться преобразовать в число + А так, по ТЗ говорят число будет, значит нужно ждать число или ругаться)
 
         } else if (index > stringMap.size()) {
             System.err.println("Строка с таким индексом еще не создана!");
