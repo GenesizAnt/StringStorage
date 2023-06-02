@@ -1,45 +1,37 @@
 package org.mystringstorage;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 public class ParserStringForCRUD {
 
-    private StringStorageInHashMap stringStorage;
-    private final String CREATE_COMMAND = "CREATE"; //ToDo вынести все поля в отдельный класс, чтобы в Майн было только старт класса + поля не будут Статик
+    private final StringStorageInHashMap stringStorage;
+    private final String CREATE_COMMAND = "CREATE";
     private final String GET_COMMAND = "GET";
     private final String UPDATE_COMMAND = "UPDATE";
     private final String DELETE_COMMAND = "DELETE";
     private final String QUIT_COMMAND = "QUIT";
 
-    private String command;
-
-    public ParserStringForCRUD(String command, StringStorageInHashMap stringStorage) {
-        this.command = command;
+    public ParserStringForCRUD(StringStorageInHashMap stringStorage) {
         this.stringStorage = stringStorage;
     }
 
-    public String getCommandUser(String command) {
+    public void getCommandUser(String command) {
         String[] userString = command.split(" ");
 
         switch (userString[0]) {
-            case CREATE_COMMAND -> stringStorage.createStringInStringStorage(getNewString(userString));
+            case CREATE_COMMAND -> stringStorage.createString(getNewString(userString));
             case GET_COMMAND -> {
                 if (userString.length == 1) {
-                    stringStorage.getStringInStringStorage();
+                    stringStorage.getAllString();
                 } else {
-                    stringStorage.getStringInStringStorage(searchStringIndex(userString));
+                    stringStorage.getStringByIndex(searchStringIndex(userString));
                 }
             }
-            case UPDATE_COMMAND -> getCREATE_COMMAND();
-            case DELETE_COMMAND -> getDELETE_COMMAND();
+            case UPDATE_COMMAND -> stringStorage.updateString(searchStringIndex(userString), getNewString(userString));
+            case DELETE_COMMAND -> stringStorage.deleteString(searchStringIndex(userString));
             case QUIT_COMMAND ->
-                    System.out.println("Завершение программы. Все данные сохранены!"); //ToDo создать метод с прощалкой и сохранением данных
-            default -> {
-                System.out.println("Введена некорректная команда!");
-            }
+                    System.out.println("Завершение программы. Все данные сохранены!");
+            default -> System.out.println("Введена некорректная команда!");
+
         }
-        return "";
     }
 
     public String getNewString(String[] userString) {
@@ -64,8 +56,9 @@ public class ParserStringForCRUD {
 
 
     public int searchStringIndex(String[] userString) {
-        if (userString.length > 2) {
-            System.err.println("Некорректный ввод!"); //ToDo проверить ввод индекса на +2 и пр.
+        int MAX_SIZE_PARAMETER_COMMAND = 3;
+        if (userString.length > MAX_SIZE_PARAMETER_COMMAND) {
+            System.err.println("Некорректный ввод!");
         }
         int index = 0;
         try {
@@ -76,28 +69,7 @@ public class ParserStringForCRUD {
         return index;
     }
 
-
-    public String getCREATE_COMMAND() {
-        return CREATE_COMMAND;
-    }
-
-    public String getGET_COMMAND() {
-        return GET_COMMAND;
-    }
-
-    public String getUPDATE_COMMAND() {
-        return UPDATE_COMMAND;
-    }
-
-    public String getDELETE_COMMAND() {
-        return DELETE_COMMAND;
-    }
-
     public String getQUIT_COMMAND() {
         return QUIT_COMMAND;
-    }
-
-    public String getCommand() {
-        return command;
     }
 }
