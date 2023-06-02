@@ -1,3 +1,0 @@
-1;some_sting1;
-2;some_sting2;
-3;some_sting3;

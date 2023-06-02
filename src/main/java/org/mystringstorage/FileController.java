@@ -4,11 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class FileController {
     public void saveFile(StringStorageInHashMap stringStorage) {
-        try (FileWriter writer = new FileWriter("saveStringStorage.txt")) {
+        try (FileWriter writer = new FileWriter("src/main/resources/saveStringStorage.txt")) {
             for (Map.Entry<Integer, String> entry : stringStorage.getStringStorageMap().entrySet()) {
                 writer.write(entry.getKey() + ";" + entry.getValue() + ";\n");
             }
@@ -17,9 +18,9 @@ public class FileController {
         }
     }
 
-    public Map<Integer, String> readFile(StringStorageInHashMap stringStorage) {
-        Map<Integer, String> stringMap = stringStorage.getStringStorageMap();
-        try (BufferedReader reader = new BufferedReader(new FileReader("saveStringStorage.txt"))) {
+    public HashMap<Integer, String> readFile(StringStorageInHashMap stringStorage) {
+        HashMap<Integer, String> stringMap = stringStorage.getStringStorageMap();
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/saveStringStorage.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] tokens = line.split(";");
