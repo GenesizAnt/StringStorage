@@ -2,39 +2,78 @@ package org.mystringstorage;
 
 public class ParserStringForCRUD {
 
-    private final StringStorageInHashMap stringStorage;
     private final String CREATE_COMMAND = "CREATE";
     private final String GET_COMMAND = "GET";
     private final String UPDATE_COMMAND = "UPDATE";
     private final String DELETE_COMMAND = "DELETE";
     private final String QUIT_COMMAND = "QUIT";
+    private final int MAX_SIZE_PARAMETER_COMMAND = 3;
 
-    public ParserStringForCRUD(StringStorageInHashMap stringStorage) {
-        this.stringStorage = stringStorage;
-    }
-
-    public void getCommandUser(String command) {
+    public CrudCommand getCrudCommand(String command) {
         String[] userString = command.split(" ");
 
         switch (userString[0]) {
-            case CREATE_COMMAND -> stringStorage.createString(getNewString(userString));
-            case GET_COMMAND -> {
-                if (userString.length == 1) {
-                    stringStorage.getAllString();
-                } else {
-                    stringStorage.getStringByIndex(searchStringIndex(userString));
-                }
+            case CREATE_COMMAND -> {
+                return getCreateCommand(userString);
             }
-            case UPDATE_COMMAND -> stringStorage.updateString(searchStringIndex(userString), getNewString(userString));
-            case DELETE_COMMAND -> stringStorage.deleteString(searchStringIndex(userString));
-            case QUIT_COMMAND ->
-                    System.out.println("Завершение программы. Все данные сохранены!");
-            default -> System.out.println("Введена некорректная команда!");
-
+            case GET_COMMAND -> {
+                return getGetCommand(userString);
+            }
+            case UPDATE_COMMAND -> {
+                return getUpdateCommand(userString);
+            }
+            case DELETE_COMMAND -> {
+                return getDeleteCommand(userString);
+            }
+            case QUIT_COMMAND -> {
+                return getQuitCommand(userString);
+            }
+            default -> {
+                return new CrudCommand();
+            }
         }
     }
 
-    public String getNewString(String[] userString) {
+    private CrudCommand getCreateCommand(String[] userString) {
+        if (userString.length == 1) {
+            return new CrudCommand();
+        } else {
+            return new CrudCommand(userString[0], getNewString(userString));
+        }
+    }
+
+    private CrudCommand getGetCommand(String[] userString) {
+        if (userString.length == 1) {
+            return new CrudCommand(userString[0]);
+        } else {
+            return new CrudCommand(userString[0], searchStringIndex(userString));
+        }
+    }
+
+    private CrudCommand getUpdateCommand(String[] userString) {
+        if (userString.length < MAX_SIZE_PARAMETER_COMMAND) {
+            return new CrudCommand();
+        } else {
+            return new CrudCommand(userString[0], searchStringIndex(userString), getNewString(userString));
+        }
+    }
+
+    private CrudCommand getDeleteCommand(String[] userString) {
+        if (userString.length == 2) {
+            return new CrudCommand(userString[0], searchStringIndex(userString));
+        } else {
+            return new CrudCommand();
+        }
+    }
+    private CrudCommand getQuitCommand(String[] userString) {
+        if (userString.length == 1) {
+            return new CrudCommand(userString[0]);
+        } else {
+            return new CrudCommand();
+        }
+    }
+
+    private String getNewString(String[] userString) {
         int count = 0;
         if (userString[0].equals(CREATE_COMMAND)) {
             count = 1;
@@ -54,9 +93,7 @@ public class ParserStringForCRUD {
         return String.valueOf(newString);
     }
 
-
-    public int searchStringIndex(String[] userString) {
-        int MAX_SIZE_PARAMETER_COMMAND = 3;
+    private int searchStringIndex(String[] userString) {
         if (userString.length > MAX_SIZE_PARAMETER_COMMAND) {
             System.err.println("Некорректный ввод!");
         }
@@ -67,9 +104,5 @@ public class ParserStringForCRUD {
             System.out.println("Индекс должен быть целым числом!");
         }
         return index;
-    }
-
-    public String getQUIT_COMMAND() {
-        return QUIT_COMMAND;
     }
 }
