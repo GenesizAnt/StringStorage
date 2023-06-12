@@ -2,13 +2,13 @@ package org.mystringstorage;
 
 public interface CRUDable {
 
-    void createString(String userString);
+    void create(String userString);
 
-    void updateString(int index, String command);
+    void updateString(int index, String userString);
 
-    void deleteString(int index);
+    void delete(int index);
 
-    void getStringByIndex(int index);
+    void getByIndex(int index);
 
-    void getAllString();
+    void getAll();
 }

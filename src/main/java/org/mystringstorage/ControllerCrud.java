@@ -2,30 +2,25 @@ package org.mystringstorage;
 
 public class ControllerCrud {
 
-    private StringStorageInHashMap stringStorage;
     private final String CREATE_COMMAND = "CREATE";
     private final String GET_COMMAND = "GET";
     private final String UPDATE_COMMAND = "UPDATE";
     private final String DELETE_COMMAND = "DELETE";
     private final String QUIT_COMMAND = "QUIT";
 
-    public ControllerCrud(StringStorageInHashMap stringStorage) {
-        this.stringStorage = stringStorage;
-    }
-
-    public void controlCommand(CrudCommand command) {
+    public void controlCommand(CRUDable crudStorage, CrudCommand command) {
 
         switch (command.getCommand()) {
-            case CREATE_COMMAND -> stringStorage.createString(command.getUserString());
+            case CREATE_COMMAND -> crudStorage.create(command.getUserString());
             case GET_COMMAND -> {
                 if (command.getIndex() == 0) {
-                    stringStorage.getAllString();
+                    crudStorage.getAll();
                 } else {
-                    stringStorage.getStringByIndex(command.getIndex());
+                    crudStorage.getByIndex(command.getIndex());
                 }
             }
-            case UPDATE_COMMAND -> stringStorage.updateString(command.getIndex(), command.getUserString());
-            case DELETE_COMMAND -> stringStorage.deleteString(command.getIndex());
+            case UPDATE_COMMAND -> crudStorage.updateString(command.getIndex(), command.getUserString());
+            case DELETE_COMMAND -> crudStorage.delete(command.getIndex());
             case QUIT_COMMAND -> System.out.println("Завершение программы. Все данные сохранены!");
             default -> System.out.println("Введена некорректная команда!");
         }

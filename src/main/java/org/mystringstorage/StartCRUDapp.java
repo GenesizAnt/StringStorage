@@ -5,16 +5,17 @@ import java.util.Scanner;
 public class StartCRUDapp {
 
     private final StringStorageInHashMap stringStorage = new StringStorageInHashMap();
+    private final PersonStorageInHashMap personHashMap = new PersonStorageInHashMap();
     private final FileController fileController = new FileController();
     private final ParserStringForCRUD parser = new ParserStringForCRUD();
-    private final ControllerCrud controllerCrud = new ControllerCrud(stringStorage);
+    private final ControllerCrud controllerCrud = new ControllerCrud();
     public void startApp() {
 
         System.out.println("Welcome to CRUD String Storage. Please choose command and press Enter:");
         System.out.println("_________________________________________________");
         String lineFromUser = "";
 
-        stringStorage.setStringStorageMap(fileController.readFile(stringStorage));
+        personHashMap.setPersonStorageMap(fileController.readFile(personHashMap));
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (!lineFromUser.equals(controllerCrud.getQUIT_COMMAND())) {
@@ -27,11 +28,11 @@ public class StartCRUDapp {
 
                 lineFromUser = scanner.nextLine();
                 CrudCommand crudCommand = parser.getCrudCommand(lineFromUser);
-                controllerCrud.controlCommand(crudCommand);
+                controllerCrud.controlCommand(personHashMap, crudCommand);
 
             }
 
-            fileController.saveFile(stringStorage);
+            fileController.saveFile(personHashMap);
 
         }
     }

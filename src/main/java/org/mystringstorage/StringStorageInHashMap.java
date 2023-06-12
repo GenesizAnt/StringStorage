@@ -26,28 +26,28 @@ public class StringStorageInHashMap implements CRUDable {
     }
 
     @Override
-    public void createString(String userString) {
+    public void create(String userString) {
         stringStorageMap.put(getStringIdCount(), userString);
         System.out.println("String saved with id = " + incrementStringIdCount());
     }
 
     @Override
-    public void getStringByIndex(int index) {
+    public void getByIndex(int index) {
         if (isCorrectIndex(index)) {
             System.out.println("String with id: " + index + " = " + stringStorageMap.get(index));
         }
     }
 
     @Override
-    public void updateString(int index, String command) {
+    public void updateString(int index, String userString) {
         if (isCorrectIndex(index)) {
-            stringStorageMap.put(index, command);
+            stringStorageMap.put(index, userString);
             System.out.println("String with id: " + index + " updated");
         }
     }
 
     @Override
-    public void deleteString(int index) {
+    public void delete(int index) {
         if (isCorrectIndex(index)) {
             stringStorageMap.remove(index);
             System.out.println("String with id: " + index + " deleted");
@@ -55,7 +55,7 @@ public class StringStorageInHashMap implements CRUDable {
     }
 
     @Override
-    public void getAllString() {
+    public void getAll() {
         for (Map.Entry<Integer, String> entry : stringStorageMap.entrySet()) {
             System.out.println("String with id: " + entry.getKey() + " = " + entry.getValue());
         }

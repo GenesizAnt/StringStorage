@@ -7,10 +7,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileController {
-    public void saveFile(StringStorageInHashMap stringStorage) {
-        try (FileWriter writer = new FileWriter("src/main/resources/saveStringStorage.txt")) {
-            for (Map.Entry<Integer, String> entry : stringStorage.getStringStorageMap().entrySet()) {
+public class FileController<K, V> {
+
+    private String pathDataFile = "";
+    private HashMap<K, V> dataMap = new HashMap<>();
+
+    public void saveFile(CRUDable crudStorage) {
+        checkStorage(crudStorage);
+        try (FileWriter writer = new FileWriter(pathDataFile)) {
+            for (Map.Entry<K, V> entry : dataMap.entrySet()) {
                 writer.write(entry.getKey() + ";" + entry.getValue() + ";\n");
             }
         } catch (IOException e) {
@@ -18,20 +23,32 @@ public class FileController {
         }
     }
 
-    public HashMap<Integer, String> readFile(StringStorageInHashMap stringStorage) {
-        HashMap<Integer, String> stringMap = stringStorage.getStringStorageMap();
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/saveStringStorage.txt"))) {
+    public HashMap<K, V> readFile(CRUDable crudStorage) {
+
+        checkStorage(crudStorage);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathDataFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] tokens = line.split(";");
                 Integer id = Integer.parseInt(tokens[0]);
                 String value = tokens[1];
-                stringMap.put(id, value);
+                dataMap.put((K) id, (V) value);
             }
-            System.out.println("Стартовые данные были взяты из файла - saveStringStorage.txt");
+            System.out.println("Стартовые данные были взяты из файла");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return stringMap;
+        return dataMap;
+    }
+
+    private void checkStorage(CRUDable crudStorage) {
+        if (crudStorage instanceof StringStorageInHashMap) {
+            dataMap = (HashMap<K, V>) ((StringStorageInHashMap) crudStorage).getStringStorageMap();
+            pathDataFile = "src/main/resources/saveStringStorage.txt";
+        } else if (crudStorage instanceof PersonStorageInHashMap) {
+            dataMap = (HashMap<K, V>) ((PersonStorageInHashMap) crudStorage).getPersonStorageMap();
+            pathDataFile = "src/main/resources/savePersonStorage.txt";
+        }
     }
 }
