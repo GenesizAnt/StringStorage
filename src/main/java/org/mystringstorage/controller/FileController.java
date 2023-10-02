@@ -1,4 +1,8 @@
-package org.mystringstorage;
+package org.mystringstorage.controller;
+
+import org.mystringstorage.data.CRUDable;
+import org.mystringstorage.data.PersonStorageInHashMap;
+import org.mystringstorage.data.StringStorageInHashMap;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

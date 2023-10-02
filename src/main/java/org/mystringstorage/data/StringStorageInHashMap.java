@@ -1,4 +1,4 @@
-package org.mystringstorage;
+package org.mystringstorage.data;
 
 import java.util.HashMap;
 import java.util.Map;

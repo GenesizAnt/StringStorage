@@ -1,4 +1,4 @@
-package org.mystringstorage;
+package org.mystringstorage.data;
 
 public interface CRUDable {
 

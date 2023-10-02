@@ -1,4 +1,6 @@
-package org.mystringstorage;
+package org.mystringstorage.command;
+
+import org.mystringstorage.command.CrudCommand;
 
 public class ParserStringForCRUD {
 

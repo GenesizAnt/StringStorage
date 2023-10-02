@@ -1,7 +1,6 @@
-package org.mystringstorage;
+package org.mystringstorage.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;

@@ -1,4 +1,7 @@
-package org.mystringstorage;
+package org.mystringstorage.controller;
+
+import org.mystringstorage.data.CRUDable;
+import org.mystringstorage.command.CrudCommand;
 
 public class ControllerCrud {
 
